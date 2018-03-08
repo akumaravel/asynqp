@@ -110,7 +110,8 @@ def open_connection(loop, transport, protocol, dispatcher, connection_info):
         yield from synchroniser.await(spec.ConnectionStart)
         sender.send_StartOK(
             {"product": "asynqp",
-             "version": "0.1",  # todo: use pkg_resources to inspect the package
+             "version": "0.8",  # todo: use pkg_resources to inspect the package
+             "connection_name" : connection_info.get('client_name'),
              "platform": sys.version,
              "capabilities": {
                  "consumer_cancel_notify": True
