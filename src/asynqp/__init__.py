@@ -24,7 +24,7 @@ def connect(host='localhost',
             username='guest', password='guest',
             virtual_host='/',
             on_connection_close=None, *,
-            loop=None, sock=None, **kwargs):
+            loop=None, sock=None, client_name=None, **kwargs):
     """
     Connect to an AMQP server on the given host and port.
 
@@ -79,7 +79,8 @@ def connect(host='localhost',
     connection_info = {
         'username': username,
         'password': password,
-        'virtual_host': virtual_host
+        'virtual_host': virtual_host,
+        'client_name' : client_name
     }
     connection = yield from open_connection(
         loop, transport, protocol, dispatcher, connection_info)
