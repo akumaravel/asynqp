@@ -93,7 +93,7 @@ def connect_and_open_channel(host='localhost',
                              username='guest', password='guest',
                              virtual_host='/',
                              on_connection_close=None, *,
-                             loop=None, **kwargs):
+                             loop=None, client_name=None, **kwargs):
     """
     Connect to an AMQP server and open a channel on the connection.
     This function is a :ref:`coroutine <coroutine>`.
@@ -108,6 +108,6 @@ def connect_and_open_channel(host='localhost',
         channel = yield from connection.open_channel()
         return connection, channel
     """
-    connection = yield from connect(host, port, username, password, virtual_host, on_connection_close, loop=loop, **kwargs)
+    connection = yield from connect(host, port, username, password, virtual_host, on_connection_close, loop=loop, client_name=client_name, **kwargs)
     channel = yield from connection.open_channel()
     return connection, channel
