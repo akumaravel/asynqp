@@ -420,6 +420,7 @@ class MessageReceiver(object):
             payload.routing_key,
             BasicReturnConsumer.tag
         )
+        self.message_builder.set_reply(payload.reply_code, payload.reply_text)
 
         # Delivers message to BasicReturnConsumer when done
         self.is_getok_message = False
