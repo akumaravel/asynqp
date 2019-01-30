@@ -128,12 +128,14 @@ class IncomingMessage(Message):
 
         The routing key under which the message was originally published.
     """
-    def __init__(self, *args, sender, delivery_tag, exchange_name, routing_key, **kwargs):
+    def __init__(self, *args, sender, delivery_tag, exchange_name, routing_key, reply_code, reply_text, **kwargs):
         super().__init__(*args, **kwargs)
         self.sender = sender
         self.delivery_tag = delivery_tag
         self.exchange_name = exchange_name
         self.routing_key = routing_key
+        self.reply_code = reply_code
+        self.reply_text = reply_text
 
     def ack(self):
         """
@@ -231,6 +233,12 @@ class MessageBuilder(object):
         self.consumer_tag = consumer_tag
         self.exchange_name = exchange_name
         self.routing_key = routing_key
+        self.reply_code = None
+        self.reply_text = None
+
+    def set_reply(self, code, text):
+        self.reply_code = code
+        self.reply_text = text
 
     def set_header(self, header):
         self.body_length = header.body_length
@@ -251,4 +259,6 @@ class MessageBuilder(object):
             delivery_tag=self.delivery_tag,
             exchange_name=self.exchange_name,
             routing_key=self.routing_key,
+            reply_code=self.reply_code,
+            reply_text=self.reply_text,
             **self.properties)
